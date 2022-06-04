@@ -63,3 +63,21 @@ func (f *Freya) HandlerMuxMiddleware(next http.Handler) http.Handler {
 
 	})
 }
+
+// HandlerMuxMiddleware wrap http handler func ( middleware )
+func (f *Freya) HandlerFuncMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, request *http.Request) {
+		ip := getIPAddress(request)
+
+		if f.Cache.IsAllowed(ip, int(f.requestNumber)) {
+			f.Cache.AddCounter(ip, f.Duration)
+
+			next.ServeHTTP(w, request)
+
+		} else {
+			http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
+			return
+		}
+
+	})
+}
