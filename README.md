@@ -1,6 +1,6 @@
 # freya
 
-Freya is lightweight golang HTTP rate limiter based on ip which uses Redis ( for now ) as cache storage.
+Freya is a lightweight golang HTTP rate limiter based on ip which uses Redis ( for now ) as cache storage.
 
 ### install :
 
