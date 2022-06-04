@@ -26,7 +26,14 @@ func (r Redis) getRedisConnection() *redis.Client {
 }
 
 func (r Redis) AddCounter(ip string, duration time.Duration) {
-	// incr rate key
+	redisConn := r.getRedisConnection()
+	val := redisConn.Get(ctx, ip)
+
+	if val.Val() == "" {
+		redisConn.Set(ctx, ip, 1, duration)
+	} else {
+		redisConn.Incr(ctx, ip)
+	}
 }
 
 func (r Redis) IsAllowed(ip string, requestNumber int) bool {
