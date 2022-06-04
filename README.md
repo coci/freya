@@ -3,7 +3,7 @@ Freya is lightweight golang HTTP rate limiter based on ip which used Redis ( for
 
 ### install :
 ```bash
-go get -U github.com/coci/freya
+go get github.com/coci/freya
 ```
 
 ### usage :
