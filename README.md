@@ -3,7 +3,7 @@ Golang Http Rate Limiter
 
 ### install :
 ```bash
-go get -U github.com/coci/freya
+go get github.com/coci/freya
 ```
 
 ### usage :
