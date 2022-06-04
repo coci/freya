@@ -15,13 +15,17 @@ type Freya struct {
 
 var lock = &sync.Mutex{}
 
+var once sync.Once
+
 // hold single instance of Freya
-var singleFreyaInstance *Freya
+var singleFreyaInstance *Freya = nil
 
 // NewLimiter create or return Freya instance ( using singleton )
 func NewLimiter(request int16, duration time.Duration, cacheType string) *Freya {
 	if singleFreyaInstance != nil {
+
 		return singleFreyaInstance
+
 	} else {
 
 		lock.Lock()
@@ -30,7 +34,7 @@ func NewLimiter(request int16, duration time.Duration, cacheType string) *Freya 
 		// get proper cache handler with user input
 		cacheType := cache.GetCacheHandler(cacheType)
 
-		singleFreyaInstance := &Freya{requestNumber: request, Cache: cacheType, Duration: duration}
+		singleFreyaInstance = &Freya{requestNumber: request, Cache: cacheType, Duration: duration}
 
 		return singleFreyaInstance
 	}
