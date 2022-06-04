@@ -21,7 +21,7 @@ var once sync.Once
 var singleFreyaInstance *Freya = nil
 
 // NewLimiter create or return Freya instance ( using singleton )
-func NewLimiter(request int16, duration time.Duration, cacheType string) *Freya {
+func NewLimiter(request int16, duration time.Duration, cacheType cache.RateLimitCacheType) *Freya {
 	if singleFreyaInstance != nil {
 
 		return singleFreyaInstance

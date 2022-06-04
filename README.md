@@ -34,7 +34,7 @@ func main() {
 	// duration : 60s
 	// cache : redis
 	// it create rate limit 10 request per minutes and store rate information on redis
-	lm := freya.NewLimiter(10, 60*time.Second, "redis")
+	lm := freya.NewLimiter(10, 60*time.Second, cache.RedisBackend)
 
 	// config redis
 	lm.Cache = cache.Redis{Host: "localhost", Port: 6379, Db: 0}
@@ -71,7 +71,7 @@ func main() {
 	// duration : 60s
 	// cache : redis
 	// it create rate limit 10 request per minutes and store rate information on redis
-	lm := freya.NewLimiter(10, 60*time.Second, "redis")
+	lm := freya.NewLimiter(10, 60*time.Second, cache.RedisBackend)
 
 	// config redis
 	lm.Cache = cache.Redis{Host: "localhost", Port: 6379, Db: 0}
