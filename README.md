@@ -1,5 +1,5 @@
 # freya
-Golang Http Rate Limiter
+Freya is lightweight golang HTTP rate limiter based on ip which used Redis ( for now ) as cache storage.
 
 ### install :
 ```bash
@@ -82,8 +82,14 @@ func main() {
 
 ```
 
+# Todo :
+- [ ] add Memcached cache handler
 
-# what Freya stands from ?
+- [ ] add in-memory cache handler
+
+- [ ] add database cache handler
+
+# What Freya stands from ?
 i do love Norse , i always choose name and get inspiration from Norse . Ferya in norse stands from :
 
 Freya – Norse Mythology, Norse goddess of love, beauty, war, and death
