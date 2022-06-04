@@ -6,6 +6,7 @@ func GetCacheHandler(name string) ICache {
 	case "redis":
 		return Redis{"127.0.0.1", 0, 6379}
 	default:
-		return nil
+		// set this temp
+		return Redis{"127.0.0.1", 0, 6379}
 	}
 }
