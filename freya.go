@@ -1,10 +1,11 @@
 package freya
 
 import (
-	"github.com/coci/freya/cache"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/coci/freya/cache"
 )
 
 type Freya struct {
@@ -15,30 +16,8 @@ type Freya struct {
 
 var lock = &sync.Mutex{}
 
-var once sync.Once
-
 // hold single instance of Freya
 var singleFreyaInstance *Freya = nil
-
-// NewLimiter create or return Freya instance ( using singleton )
-func NewLimiter(request int16, duration time.Duration, cacheType cache.RateLimitCacheType) *Freya {
-	if singleFreyaInstance != nil {
-
-		return singleFreyaInstance
-
-	} else {
-
-		lock.Lock()
-		defer lock.Unlock()
-
-		// get proper cache handler with user input
-		cacheType := cache.GetCacheHandler(cacheType)
-
-		singleFreyaInstance = &Freya{requestNumber: request, Cache: cacheType, Duration: duration}
-
-		return singleFreyaInstance
-	}
-}
 
 // HandlerMuxMiddleware wrap http mux handler ( middleware )
 func (f *Freya) HandlerMuxMiddleware(next http.Handler) http.Handler {
@@ -80,4 +59,24 @@ func (f *Freya) HandlerFuncMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 	})
+}
+
+// NewLimiter create or return Freya instance ( using singleton )
+func NewLimiter(request int16, duration time.Duration, cacheType cache.RateLimitCacheType) *Freya {
+	if singleFreyaInstance != nil {
+
+		return singleFreyaInstance
+
+	} else {
+
+		lock.Lock()
+		defer lock.Unlock()
+
+		// get proper cache handler with user input
+		cacheType := cache.GetCacheHandler(cacheType)
+
+		singleFreyaInstance = &Freya{requestNumber: request, Cache: cacheType, Duration: duration}
+
+		return singleFreyaInstance
+	}
 }
